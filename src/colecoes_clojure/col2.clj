@@ -42,7 +42,7 @@
 (minha-funcao 1)
 (minha-funcao 1 2)
 
-
+(println "\n\nANTES DA RECORRENCIA")
 (defn conta
   ([elementos] (conta 0 elementos))
   ([total-ate-agora elementos]
@@ -52,6 +52,14 @@
 (println (conta ["susanne" "miguel" "rodrigo" "mirian" "jose" "maria"]))
 (println (conta []))
 
+(println "\n\nANTES DO LOOP")
+(defn conta [elementos]
+  (loop [total-ate-agora 0 elementos-restantes elementos]
+    (if (seq elementos-restantes)
+      (recur (inc total-ate-agora) (next elementos-restantes))
+      total-ate-agora)))
+(println (conta ["susanne" "miguel" "rodrigo" "mirian" "jose" "maria"]))
+(println (conta []))
 
 
 
