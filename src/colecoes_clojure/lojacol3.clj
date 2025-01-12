@@ -1,5 +1,5 @@
 (ns colecoes-clojure.lojacol3
-  (:require [colecoes-clojure.lojadb :as c.lojadb])  )
+  (:require [colecoes-clojure.lojadb :as c.lojadb]))
 
 (println (c.lojadb/todos-os-pedidos))
 (println (group-by :usuario (c.lojadb/todos-os-pedidos)))
