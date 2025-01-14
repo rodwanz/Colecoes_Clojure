@@ -15,15 +15,42 @@
 
 (defn resumo-por-usuario-ordenado [pedidos]
   "Threading last"
-  (->> pedidos (sort-by :preco-total)))
+  (->> pedidos
+       c.logic/resumo-por-usuario
+       (sort-by :preco-total)
+       reverse))
 
 (let [pedidos (c.lojadb/todos-os-pedidos)
       resumo (resumo-por-usuario-ordenado pedidos)]
-  (println "Resumo" resumo))
+  (println "Resumo" resumo)
+  (println "Primeiro item do resumo" (first resumo))
+  (println "Segundo item do resumo" (second resumo))
+  (println "Resto" (rest resumo))
+  (println "Fazendo a contagem de quantos itens a no resumo" (count resumo))
+  (println "Informando a classe onde esta implementado o resumo" (class resumo))
+  (println "O enésimo item" (nth resumo 1))
+  (println "Busacando o primeiro item, sem que seja vetor não dá" (get resumo 1))
+  (println "Pegando os dois primeiros itens" (take 2 resumo)))
 
 
+(println "\nDEIXANDO SEPARADO OS RESULTADOS")
+(defn top-2 [resumo]
+  (take 2 resumo))
 
+(let [pedidos (c.lojadb/todos-os-pedidos)
+      resumo (resumo-por-usuario-ordenado pedidos)]
+  (println "Resumo" resumo)
+  (println "Top 2" (top-2 resumo)))
 
+(println "\nFUNÇÕES ANONIMAS")
+(let [pedidos (c.lojadb/todos-os-pedidos)
+      resumo (resumo-por-usuario-ordenado pedidos)]
+  (println "Criando uma função anonima para filtrar quem teve gastos maiores que 500"
+           (filter #(> (:preco-total %) 500) resumo))
+  (println "Busacando no Resumo se verdadeiramente receberam mais que 500"
+           (not (empty? (filter #(> (:preco-total %) 500) resumo))))
+  (println "Busacando no Resumo se alguém recebeu mais que 500"
+           (some #(> (:preco-total %) 500) resumo)))
 
 
 
